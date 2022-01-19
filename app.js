@@ -4,12 +4,16 @@ function createGrid(numberOfColumns) {
   const gridWidth =  grid.clientWidth;
 
   const cellWidth = gridWidth/numberOfColumns;
-  for (let i = 0; i < numberOfColumns ** 2; i++){
-    const cell = document.createElement('div');
-    cell.setAttribute('style', `box-sizing: border-box; width: ${cellWidth}px;
-     height: ${cellWidth}px; border: 1px solid black`);
-    cell.addEventListener('mouseenter', colorToBlack);
-    grid.appendChild(cell);
+  for (let i = 0; i < numberOfColumns; i++){
+    const gridLine = document.createElement('div');
+    gridLine.classList.add('grid-line');
+    grid.appendChild(gridLine);
+    for (let j = 0; j < numberOfColumns; j++){
+      const cell = document.createElement('div');
+      cell.classList.add('grid-cell');
+      cell.addEventListener('mouseenter', colorToBlack);
+      gridLine.appendChild(cell);
+    }
   }
 }
 
