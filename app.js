@@ -32,7 +32,7 @@ const gradientToBlack = (event) => {
   const currentShade = parseInt(event.target.style.backgroundColor.slice(4, 7));
   console.log(currentShade);
   if (currentShade > 0) {
-    let newShade = currentShade - 25;
+    let newShade = currentShade - 32;
     if (newShade < 0) {
       newShade = 0;
     }
