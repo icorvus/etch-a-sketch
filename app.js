@@ -1,4 +1,4 @@
-function createGrid(numberOfColumns) {
+function createGrid(numberOfColumns, mode) {
   const grid = document.getElementById('grid');
 
   // Clears the grid to make space for new divs
@@ -12,7 +12,7 @@ function createGrid(numberOfColumns) {
       const cell = document.createElement('div');
       cell.classList.add('grid-cell');
       cell.style.backgroundColor = '#ffffff';
-      cell.onmouseenter = gradientToBlack;
+      cell.onmouseenter = mode;
       gridLine.appendChild(cell);
     }
   }
@@ -48,9 +48,52 @@ const colorToRandom  = (event) => {
   event.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 }
 
-clearButton = document.getElementById('clear-btn');
-clearButton.addEventListener('click', clearGrid)
+
+function main() {
+  let currentMode = colorToBlack;
+  let currentGridSize = 16;
+  createGrid(currentGridSize, currentMode);
+
+  const sliderBox = document.getElementById('slider-box');
+  const gridText = document.createElement('h3')
+  gridText.textContent = `${currentGridSize}x${currentGridSize}`;
+  sliderBox.insertBefore(gridText, sliderBox.firstChild)
+
+  sliderGridSize = document.getElementById('grid-size');
+  sliderGridSize.addEventListener('input', (event) => {
+    currentGridSize = event.target.value;
+    gridText.textContent = `${currentGridSize}x${currentGridSize}`;
+    createGrid(currentGridSize, currentMode);
+  })
 
 
+  clearButton = document.getElementById('clear-btn');
+  clearButton.addEventListener('click', () => createGrid(currentGridSize, currentMode));
 
-createGrid(32);
+  monoButton = document.getElementById('mono-btn');
+  monoButton.addEventListener('click', () => {
+    if ((currentMode !== colorToBlack)){
+      currentMode = colorToBlack;
+      createGrid(currentGridSize, currentMode);
+    }
+  })
+
+  gradientButton = document.getElementById('gradient-btn');
+  gradientButton.addEventListener('click', () => {
+    if ((currentMode !== gradientToBlack)){
+      currentMode = gradientToBlack;
+      createGrid(currentGridSize, currentMode);
+    }
+  })
+
+  rainbowButton = document.getElementById('rainbow-btn');
+  rainbowButton.addEventListener('click', () => {
+    if ((currentMode !== colorToRandom)){
+      currentMode = colorToRandom;
+      createGrid(currentGridSize, currentMode);
+    }
+  })
+
+}
+
+main()
