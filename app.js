@@ -33,7 +33,9 @@ const colorToBlack = (event) => {
 };
 
 const gradientToBlack = (event) => {
-  const currentShade = parseInt(event.target.style.backgroundColor.slice(4, 7));
+  let [red, green, blue] = event.target.style.backgroundColor.slice(4, -1).split(', ');
+  if (!(red === green && green === blue)) red = 255;
+  const currentShade = red;
   console.log(currentShade);
   if (currentShade > 0) {
     let newShade = currentShade - 32;
@@ -56,7 +58,8 @@ const colorToRandom  = (event) => {
 function main() {
   let currentMode = colorToBlack;
   let currentGridSize = 16;
-  createGrid(currentGridSize, currentMode);
+  let isPenDown = false;
+  createGrid(currentGridSize, null);
 
   const sliderBox = document.getElementById('slider-box');
   const gridText = document.createElement('h3');
@@ -67,44 +70,35 @@ function main() {
   sliderGridSize.addEventListener('input', (event) => {
     currentGridSize = event.target.value;
     gridText.textContent = `${currentGridSize}x${currentGridSize}`;
-    createGrid(currentGridSize, currentMode);
+    createGrid(currentGridSize, null);
+    isPenDown = false;
   });
 
 
   const clearButton = document.getElementById('clear-btn');
-  clearButton.addEventListener('click', () => fillBackground('white'));
+  clearButton.addEventListener('click', () => fillBackground('#ffffff'));
 
   const monoButton = document.getElementById('mono-btn');
   monoButton.addEventListener('click', () => {
-    if ((currentMode !== colorToBlack)){
-      currentMode = colorToBlack;
-      if(isPenDown) {
-        changeWritingMode(currentMode);
-      }
-    }
+    currentMode = colorToBlack;
+    changeWritingMode(null);
+    isPenDown = false;
   });
 
   const gradientButton = document.getElementById('gradient-btn');
   gradientButton.addEventListener('click', () => {
-    if ((currentMode !== gradientToBlack)){
-      currentMode = gradientToBlack;
-      if(isPenDown) {
-        changeWritingMode(currentMode);
-      }
-    }
+    currentMode = gradientToBlack;
+    changeWritingMode(null);
+    isPenDown = false;
   });
 
   const rainbowButton = document.getElementById('rainbow-btn');
   rainbowButton.addEventListener('click', () => {
-    if ((currentMode !== colorToRandom)){
-      currentMode = colorToRandom;
-      if(isPenDown) {
-        changeWritingMode(currentMode);
-      }
-    }
+    currentMode = colorToRandom;
+    changeWritingMode(null);
+    isPenDown = false;
   });
 
-  let isPenDown = true;
   const grid = document.getElementById('grid');
   grid.addEventListener('click', () => {
     if (isPenDown) {
