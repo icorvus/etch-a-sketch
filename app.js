@@ -18,6 +18,16 @@ function createGrid(numberOfColumns, mode) {
   }
 }
 
+function changeWritingMode(newMode) {
+  const cells = document.querySelectorAll('.grid-cell');
+  cells.forEach(cell => cell.onmouseenter = newMode);
+}
+
+function fillBackground(color) {
+  const cells = document.querySelectorAll('.grid-cell');
+  cells.forEach(cell => cell.style.backgroundColor = color);
+}
+
 function clearGrid() {
   const gridSize = prompt("How many squares per side do you want?\nCurrently max supported grid size is 100x100.");
   if (gridSize > 100 || isNaN(gridSize) || gridSize < 1) clearGrid();
@@ -68,13 +78,15 @@ function main() {
 
 
   clearButton = document.getElementById('clear-btn');
-  clearButton.addEventListener('click', () => createGrid(currentGridSize, currentMode));
+  clearButton.addEventListener('click', () => fillBackground('white'));
 
   monoButton = document.getElementById('mono-btn');
   monoButton.addEventListener('click', () => {
     if ((currentMode !== colorToBlack)){
       currentMode = colorToBlack;
-      createGrid(currentGridSize, currentMode);
+      if(isPenDown) {
+        changeWritingMode(currentMode);
+      }
     }
   })
 
@@ -82,7 +94,9 @@ function main() {
   gradientButton.addEventListener('click', () => {
     if ((currentMode !== gradientToBlack)){
       currentMode = gradientToBlack;
-      createGrid(currentGridSize, currentMode);
+      if(isPenDown) {
+        changeWritingMode(currentMode);
+      }
     }
   })
 
@@ -90,7 +104,21 @@ function main() {
   rainbowButton.addEventListener('click', () => {
     if ((currentMode !== colorToRandom)){
       currentMode = colorToRandom;
-      createGrid(currentGridSize, currentMode);
+      if(isPenDown) {
+        changeWritingMode(currentMode);
+      }
+    }
+  })
+
+  let isPenDown = true;
+  grid = document.getElementById('grid');
+  grid.addEventListener('click', () => {
+    if (isPenDown) {
+      changeWritingMode(null);
+      isPenDown = false;
+    } else {
+      changeWritingMode(currentMode)
+      isPenDown = true;
     }
   })
 
