@@ -74,36 +74,39 @@ function main() {
     isPenDown = false;
   });
 
+  function penUp() {
+    changeWritingMode(null);
+    isPenDown = false;
+  }
 
   const clearButton = document.getElementById('clear-btn');
-  clearButton.addEventListener('click', () => fillBackground('#ffffff'));
+  clearButton.addEventListener('click', () => {
+    fillBackground('#ffffff');
+    penUp();
+  });
 
   const monoButton = document.getElementById('mono-btn');
   monoButton.addEventListener('click', () => {
     currentMode = colorToBlack;
-    changeWritingMode(null);
-    isPenDown = false;
+    penUp();
   });
 
   const gradientButton = document.getElementById('gradient-btn');
   gradientButton.addEventListener('click', () => {
     currentMode = gradientToBlack;
-    changeWritingMode(null);
-    isPenDown = false;
+    penUp();
   });
 
   const rainbowButton = document.getElementById('rainbow-btn');
   rainbowButton.addEventListener('click', () => {
     currentMode = colorToRandom;
-    changeWritingMode(null);
-    isPenDown = false;
+    penUp();
   });
 
   const grid = document.getElementById('grid');
   grid.addEventListener('click', () => {
     if (isPenDown) {
-      changeWritingMode(null);
-      isPenDown = false;
+      penUp();
     } else {
       changeWritingMode(currentMode);
       isPenDown = true;
