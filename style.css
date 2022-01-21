@@ -15,21 +15,15 @@ body {
 .container {
   height: 100%;
   display: flex;
-  flex-direction: column;
-}
-
-.header {
-  text-align: center;
-  padding: 16px;
-  flex: 0 1 auto;
-  background-color: #5887FF;
+  align-items: center;
+  background-color: #A682FF;
 }
 
 .content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   background-color: #A682FF;
+  text-align: right;
   flex: 1 1 auto;
 }
 
@@ -38,6 +32,7 @@ body {
   flex-direction: column;
   width: 690px;
   height: 690px;
+  flex: 0 0 auto;
   /* border: 4px solid #715AFF; */
 }
 
@@ -52,7 +47,10 @@ body {
 
 .menu {
   display: flex;
-  margin: 25px;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 230px;
+  margin: 0 50px;
   gap: 20px;
 }
 
@@ -66,18 +64,27 @@ body {
   cursor: pointer;
 }
 
+.btn:hover {
+  background-color: #A682FF;
+}
+
 .slider-box {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   text-align: center;
-  padding: 25px;
-  flex: 1 1 auto;
   font-size: 20px;
   font-weight: 400;
   color: #715AFF;
 }
 
 .slider {
-  width: 500px;
+  width: 230px;
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 15px;
 }

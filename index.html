@@ -11,20 +11,24 @@
 
 <body>
   <div class="container">
-    <div class="header">
-      <h1>Etch-a-sketch</h1>
-    </div>
     <div class="content">
       <div class="menu">
-        <button id="clear-btn" class="btn clear">Clear</button>
-        <button id="mono-btn" class="btn mono">Black</button>
-        <button id="gradient-btn" class="btn gradient">Greyscale</button>
-        <button id="rainbow-btn" class="btn rainbow">Rainbow</button>
+        <h1>Pixel-o-painter</h1>
+        <p>Left-click anywhere on the canvas to start painting!</p>
+
+        <div id="slider-box" class="slider-box">
+          <input type="range" min="1" max="64" value="16" class="slider" id="grid-size">
+        </div>
+
+        <div class="btn-container">
+          <button id="clear-btn" class="btn clear">Clear</button>
+          <button id="mono-btn" class="btn mono">Black</button>
+          <button id="gradient-btn" class="btn gradient">Greyscale</button>
+          <button id="rainbow-btn" class="btn rainbow">Rainbow</button>
+        </div>
+
       </div>
       <div id="grid" class="grid-container"></div>
-      <div id="slider-box" class="slider-box">
-      <input type="range" min="1" max="64" value="16" class="slider" id="grid-size">
-    </div>
     </div>
   </div>
 </body>
