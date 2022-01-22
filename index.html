@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Etch-a-sketch</title>
+  <title>Pixel painter</title>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
@@ -13,7 +13,7 @@
   <div class="container">
     <div class="content">
       <div class="menu">
-        <h1>Pixel-o-painter</h1>
+        <h1>Pixel painter</h1>
         <p>Left-click anywhere on the canvas to start painting!</p>
 
         <div id="slider-box" class="slider-box">
@@ -25,6 +25,10 @@
           <button id="mono-btn" class="btn mono">Black</button>
           <button id="gradient-btn" class="btn gradient">Greyscale</button>
           <button id="rainbow-btn" class="btn rainbow">Rainbow</button>
+          <div id="color-container" class="color-container">
+            <input type="color" id="color-picker" class="color-picker" name="color" value="#5887FF">
+          </div>
+          <button id="fill-btn" class="btn fill">Fill the canvas</button>
         </div>
 
       </div>

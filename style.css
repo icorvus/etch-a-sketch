@@ -56,7 +56,7 @@ body {
 
 .btn {
   box-sizing: border-box;
-  width: 100px;
+  width: 107px;
   padding: 12px;
   background-color: #715AFF;
   color: #ffffff;
@@ -87,4 +87,21 @@ body {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 15px;
+}
+
+.color-container {
+  width: 100%;
+  background-color: #5887FF;
+}
+
+.fill {
+  width: 100%;
+}
+
+.color-picker {
+  opacity: 0;
+  width:  100%;
+  height: 47px;
+  border: none;
+  cursor: pointer;
 }

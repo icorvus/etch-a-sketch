@@ -54,6 +54,14 @@ const colorToRandom  = (event) => {
   event.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 };
 
+const colorPicker = document.getElementById('color-picker');
+const colorContainer = document.getElementById('color-container');
+colorPicker.addEventListener('input', () => colorContainer.style.backgroundColor = colorPicker.value);
+
+const colorToUser = (event) => {
+  event.target.style.backgroundColor = colorPicker.value;
+};
+
 
 function main() {
   let currentMode = colorToBlack;
@@ -100,6 +108,19 @@ function main() {
   const rainbowButton = document.getElementById('rainbow-btn');
   rainbowButton.addEventListener('click', () => {
     currentMode = colorToRandom;
+    penUp();
+  });
+
+  const colorPicker = document.getElementById('color-picker');
+
+  const fillButton = document.getElementById('fill-btn');
+  fillButton.addEventListener('click', () => {
+    fillBackground(colorPicker.value);
+    penUp();
+  });
+
+  colorPicker.addEventListener('change', () => {
+    currentMode = colorToUser;
     penUp();
   });
 
