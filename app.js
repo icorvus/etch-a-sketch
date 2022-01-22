@@ -2,7 +2,7 @@ function createGrid(numberOfColumns, mode) {
   const grid = document.getElementById('grid');
 
   // Clears the grid to make space for new divs
-  grid.textContent = ''
+  grid.textContent = '';
 
   for (let i = 0; i < numberOfColumns; i++){
     const gridLine = document.createElement('div');
@@ -18,18 +18,24 @@ function createGrid(numberOfColumns, mode) {
   }
 }
 
-function clearGrid() {
-  const gridSize = prompt("How many squares per side do you want?\nCurrently max supported grid size is 100x100.");
-  if (gridSize > 100 || isNaN(gridSize) || gridSize < 1) clearGrid();
-  else createGrid(gridSize);
+function changeWritingMode(newMode) {
+  const cells = document.querySelectorAll('.grid-cell');
+  cells.forEach(cell => cell.onmouseenter = newMode);
+}
+
+function fillBackground(color) {
+  const cells = document.querySelectorAll('.grid-cell');
+  cells.forEach(cell => cell.style.backgroundColor = color);
 }
 
 const colorToBlack = (event) => {
   event.target.style.backgroundColor = 'black';
-}
+};
 
 const gradientToBlack = (event) => {
-  const currentShade = parseInt(event.target.style.backgroundColor.slice(4, 7));
+  let [red, green, blue] = event.target.style.backgroundColor.slice(4, -1).split(', ');
+  if (!(red === green && green === blue)) red = 255;
+  const currentShade = red;
   console.log(currentShade);
   if (currentShade > 0) {
     let newShade = currentShade - 32;
@@ -38,7 +44,7 @@ const gradientToBlack = (event) => {
     }
     event.target.style.backgroundColor = `rgb(${newShade}, ${newShade}, ${newShade})`;
   }
-}
+};
 
 const colorToRandom  = (event) => {
   const red = Math.floor(Math.random() * 256);
@@ -46,54 +52,88 @@ const colorToRandom  = (event) => {
   const blue = Math.floor(Math.random() * 256);
 
   event.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-}
+};
+
+const colorPicker = document.getElementById('color-picker');
+const colorContainer = document.getElementById('color-container');
+colorPicker.addEventListener('input', () => colorContainer.style.backgroundColor = colorPicker.value);
+
+const colorToUser = (event) => {
+  event.target.style.backgroundColor = colorPicker.value;
+};
 
 
 function main() {
   let currentMode = colorToBlack;
   let currentGridSize = 16;
-  createGrid(currentGridSize, currentMode);
+  let isPenDown = false;
+  createGrid(currentGridSize, null);
 
   const sliderBox = document.getElementById('slider-box');
-  const gridText = document.createElement('h3')
+  const gridText = document.createElement('h3');
   gridText.textContent = `${currentGridSize}x${currentGridSize}`;
-  sliderBox.insertBefore(gridText, sliderBox.firstChild)
+  sliderBox.insertBefore(gridText, sliderBox.firstChild);
 
-  sliderGridSize = document.getElementById('grid-size');
+  const sliderGridSize = document.getElementById('grid-size');
   sliderGridSize.addEventListener('input', (event) => {
     currentGridSize = event.target.value;
     gridText.textContent = `${currentGridSize}x${currentGridSize}`;
-    createGrid(currentGridSize, currentMode);
-  })
+    createGrid(currentGridSize, null);
+    isPenDown = false;
+  });
 
+  function penUp() {
+    changeWritingMode(null);
+    isPenDown = false;
+  }
 
-  clearButton = document.getElementById('clear-btn');
-  clearButton.addEventListener('click', () => createGrid(currentGridSize, currentMode));
+  const clearButton = document.getElementById('clear-btn');
+  clearButton.addEventListener('click', () => {
+    fillBackground('#ffffff');
+    penUp();
+  });
 
-  monoButton = document.getElementById('mono-btn');
+  const monoButton = document.getElementById('mono-btn');
   monoButton.addEventListener('click', () => {
-    if ((currentMode !== colorToBlack)){
-      currentMode = colorToBlack;
-      createGrid(currentGridSize, currentMode);
-    }
-  })
+    currentMode = colorToBlack;
+    penUp();
+  });
 
-  gradientButton = document.getElementById('gradient-btn');
+  const gradientButton = document.getElementById('gradient-btn');
   gradientButton.addEventListener('click', () => {
-    if ((currentMode !== gradientToBlack)){
-      currentMode = gradientToBlack;
-      createGrid(currentGridSize, currentMode);
-    }
-  })
+    currentMode = gradientToBlack;
+    penUp();
+  });
 
-  rainbowButton = document.getElementById('rainbow-btn');
+  const rainbowButton = document.getElementById('rainbow-btn');
   rainbowButton.addEventListener('click', () => {
-    if ((currentMode !== colorToRandom)){
-      currentMode = colorToRandom;
-      createGrid(currentGridSize, currentMode);
+    currentMode = colorToRandom;
+    penUp();
+  });
+
+  const colorPicker = document.getElementById('color-picker');
+
+  const fillButton = document.getElementById('fill-btn');
+  fillButton.addEventListener('click', () => {
+    fillBackground(colorPicker.value);
+    penUp();
+  });
+
+  colorPicker.addEventListener('change', () => {
+    currentMode = colorToUser;
+    penUp();
+  });
+
+  const grid = document.getElementById('grid');
+  grid.addEventListener('click', () => {
+    if (isPenDown) {
+      penUp();
+    } else {
+      changeWritingMode(currentMode);
+      isPenDown = true;
     }
-  })
+  });
 
 }
 
-main()
+main();
