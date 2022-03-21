@@ -1,6 +1,9 @@
 # Pixel-o-painter
 > Pixel art maker with many fun features. Hover your mouse to color the canvas using some of the predefined modes or use your own colors.
 
+## Live Version
+https://icorvus.github.io/pixel-o-painter/
+
 ## Table of Contents
 * [General Information](#general-information)
 * [Technologies Used](#technologies-used)
